@@ -1,0 +1,5 @@
+name = My Ajax Node Loader
+description = Display Nodes with Ajax.
+package = Blake's Package
+core = 7.x
+files[] = mymodule.module
