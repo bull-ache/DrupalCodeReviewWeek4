@@ -21,7 +21,7 @@ function dna_form() {
     $form['dna_input'] = array(
         '#title' => 'Type out some nucleotides to complete the double helix',
         '#type' => 'textfield',
-        '#description' => t('Enter'),
+        '#description' => t(''),
         '#element_validate' => array('element_validate_value'),
         '#required' => TRUE,
     );
@@ -34,7 +34,7 @@ function dna_form() {
 
 function element_validate_value($form, &$form_state) {
     $value = strtoUpper($form_state['values']['dna_input']);
-    if (!preg_match('/[atcgATCG] /', $value)) {
+    if (!preg_match('/[atcgATCG]/', $value)) {
         form_set_error('dna_input', t('Your input must ONLY contain the letters A T C and G'));
     }
 }
