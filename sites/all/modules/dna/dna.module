@@ -1,0 +1,92 @@
+<?php
+
+function dna_menu() {
+    $items['dna'] = array(
+        'title' => 'Type out some nucleotides to complete the double helix',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('dna_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['dna_success_page'] = array(
+        'title' => 'Success',
+        'page callback' => 'dna_success',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function dna_form() {
+    $form['dna_input'] = array(
+        '#title' => 'Type out some nucleotides to complete the double helix',
+        '#type' => 'textfield',
+        '#description' => t('Enter'),
+        '#element_validate' => array('element_validate_value'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Scramble your phrase!',
+    );
+    return $form;
+}
+
+function element_validate_value($form, &$form_state) {
+    $value = strtoUpper($form_state['values']['dna_input']);
+    if (!preg_match('/^[atcgATCG] /', $value)) {
+        form_set_error('dna_input', t('Your input must ONLY contain the letters A T C and G'));
+    }
+}
+
+
+
+function dna_form_submit($form, &$form_state) {
+
+    $dna_array = array('A', 'T', 'C', 'G');
+    $dna_flip = array_flip($dna_array);
+
+    $input_string = strtoupper($form_state['values']['dna_input']);
+    $input_array = str_split($input_string);
+    $input_flip = array_flip($input_array);
+    $input_length = count($input_array);
+
+    $answer_array = array();
+
+    for ($i=0; $i<$input_length; $i++) {
+        $result = '',
+        if (in_array($input_array[$i], $dna_array)) {
+            if ($input_array[$i] === 'A')
+            {
+              $result = 'AT'
+            }
+            else if ($input_array[$i] === 'T')
+            {
+              $result = 'TA'
+            }
+            else if ($input_array[$i] === 'C')
+            {
+              $result = 'CG'
+            }
+            else if ($input_array[$i] === 'G')
+            {
+              $result = 'GC'
+            }
+        else {
+            $result = $input_array[$i];
+
+        }
+          array_push($answer_array, $result);
+      }
+  }
+    $answer = implode("", $answer_array);
+
+    $_SESSION['answer'] = $answer;
+    $form_state['redirect'] = 'dna_success_page';
+}
+
+
+function dna_success() {
+       $answer = $_SESSION['answer'];
+       return '<h1>Here is your double helix:' . $answer . '</h1>';
+}
