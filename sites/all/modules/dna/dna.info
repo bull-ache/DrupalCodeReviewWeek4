@@ -1,7 +1,7 @@
-name = DNA pairs
+name = dna
 description = A module for creating DNA pairs.
 package = Blake's Package
 core = 7.x
-dependencies[] = simpletest
-files[] = simpletest_example.test
+files[] = dna.test
 files[] = dna.module
+dependencies[] = simpletest

@@ -1,0 +1,27 @@
+<?php
+
+class DnaTestCase extends DrupalWebTestCase
+{
+
+    public static function getInfo() {
+        return array(
+            'name' => 'Functional DNA Test',
+            'description' => 'Functional test for DNA module.',
+            'group' => 'DNA Tests'
+
+        );
+    }
+
+    public function setUp() {
+       parent::setUp(array('dna'));
+    }
+
+    public function testDnaModule() {
+
+        $edit = array();
+        $edit['dna_input'] = 'aattccgg';
+
+        $this->drupalPost('/dna_create', $edit, t('Get Double Helix'));
+        $this->assertText(t('ATATTATACGCGGCGC'), t('Correct double helix'));
+    }
+}
