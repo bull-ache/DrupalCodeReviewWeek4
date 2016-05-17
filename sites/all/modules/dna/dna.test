@@ -25,3 +25,16 @@ class DnaTestCase extends DrupalWebTestCase
         $this->assertText(t('ATATTATACGCGGCGC'), t('Correct double helix'));
     }
 }
+
+class UnitDnaTestCase extends DrupalWebTestCase
+{
+
+    public static function getInfo() {
+        return array(
+            'name' => 'Unit DNA Test',
+            'description' => 'Unit test for DNA module.',
+            'group' => 'DNA Tests'
+
+        );
+    }
+}
