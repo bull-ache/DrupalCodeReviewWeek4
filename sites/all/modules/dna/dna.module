@@ -27,14 +27,14 @@ function dna_form() {
     );
     $form['submit'] = array(
         '#type' => 'submit',
-        '#value' => 'Scramble your phrase!',
+        '#value' => 'Submit!',
     );
     return $form;
 }
 
 function element_validate_value($form, &$form_state) {
     $value = strtoUpper($form_state['values']['dna_input']);
-    if (!preg_match('/^[atcgATCG] /', $value)) {
+    if (!preg_match('/[atcgATCG] /', $value)) {
         form_set_error('dna_input', t('Your input must ONLY contain the letters A T C and G'));
     }
 }
@@ -54,23 +54,23 @@ function dna_form_submit($form, &$form_state) {
     $answer_array = array();
 
     for ($i=0; $i<$input_length; $i++) {
-        $result = '',
+
         if (in_array($input_array[$i], $dna_array)) {
             if ($input_array[$i] === 'A')
             {
-              $result = 'AT'
+              $result = 'AT';
             }
             else if ($input_array[$i] === 'T')
             {
-              $result = 'TA'
+              $result = 'TA';
             }
             else if ($input_array[$i] === 'C')
             {
-              $result = 'CG'
+              $result = 'CG';
             }
             else if ($input_array[$i] === 'G')
             {
-              $result = 'GC'
+              $result = 'GC';
             }
         else {
             $result = $input_array[$i];
